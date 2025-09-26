@@ -1,6 +1,6 @@
 from typing import Dict, Any, Optional, Protocol
 from abc import ABC, abstractmethod
-from vector_store import VectorStore, SearchResults
+from .vector_store import VectorStore, SearchResults
 
 
 class Tool(ABC):
@@ -100,11 +100,19 @@ class CourseSearchTool(Tool):
                 header += f" - Lesson {lesson_num}"
             header += "]"
             
-            # Track source for the UI
-            source = course_title
+            # Create source text
+            source_text = course_title
             if lesson_num is not None:
-                source += f" - Lesson {lesson_num}"
-            sources.append(source)
+                source_text += f" - Lesson {lesson_num}"
+
+            # Get link for the source
+            link = self.store.get_lesson_link(course_title, lesson_num) if lesson_num else self.store.get_course_link(course_title)
+
+            # Add to sources list for the UI
+            sources.append({
+                "text": source_text,
+                "link": link
+            })
             
             formatted.append(f"{header}\n{doc}")
         

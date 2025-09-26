@@ -1,16 +1,10 @@
-import os
 from dataclasses import dataclass
-from dotenv import load_dotenv
-
-# Load environment variables from .env file
-load_dotenv()
 
 @dataclass
 class Config:
     """Configuration settings for the RAG system"""
-    # Anthropic API settings
-    ANTHROPIC_API_KEY: str = os.getenv("ANTHROPIC_API_KEY", "")
-    ANTHROPIC_MODEL: str = "claude-sonnet-4-20250514"
+    # Ollama settings
+    OLLAMA_MODEL: str = "llama3.2"
     
     # Embedding model settings
     EMBEDDING_MODEL: str = "all-MiniLM-L6-v2"
@@ -25,5 +19,3 @@ class Config:
     CHROMA_PATH: str = "./chroma_db"  # ChromaDB storage location
 
 config = Config()
-
-
