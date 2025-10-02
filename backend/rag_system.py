@@ -16,7 +16,7 @@ class RAGSystem:
         # Initialize core components
         self.document_processor = DocumentProcessor(config.CHUNK_SIZE, config.CHUNK_OVERLAP)
         self.vector_store = VectorStore(config.CHROMA_PATH, config.EMBEDDING_MODEL, config.MAX_RESULTS)
-        self.ai_generator = AIGenerator(config.OLLAMA_MODEL)
+        self.ai_generator = AIGenerator(config.PERPLEXITY_MODEL)
         self.session_manager = SessionManager(config.MAX_HISTORY)
         
         # Initialize search tools
@@ -47,7 +47,7 @@ class RAGSystem:
             return course, len(course_chunks)
         except Exception as e:
             print(f"Error processing course document {file_path}: {e}")
-            return None, 0
+            raise e
     
     def add_course_folder(self, folder_path: str, clear_existing: bool = False) -> Tuple[int, int]:
         """

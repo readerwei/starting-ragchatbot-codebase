@@ -1,23 +1,28 @@
 import unittest
 from unittest.mock import MagicMock, patch
-from backend.ai_generator import AIGenerator
+from ai_generator import AIGenerator
 from langchain_core.messages import AIMessage
 
 class TestAIGenerator(unittest.TestCase):
 
     def setUp(self):
         self.mock_tool_manager = MagicMock()
-        self.patcher = patch('langchain_community.chat_models.ollama.ChatOllama')
-        self.MockOllama = self.patcher.start()
-        self.mock_llm = self.MockOllama.return_value
-        self.ai_generator = AIGenerator(model="test_model")
+        # Patch ChatOpenAI instead of ChatOllama
+        self.patcher = patch('langchain_openai.ChatOpenAI')
+        self.MockChatOpenAI = self.patcher.start()
+        self.mock_llm = self.MockChatOpenAI.return_value
+        
+        # Mock os.getenv to avoid needing a real API key
+        with patch('os.getenv', return_value='fake_api_key'):
+            self.ai_generator = AIGenerator(model="test_model")
+        
         self.ai_generator.llm = self.mock_llm
 
     def tearDown(self):
         self.patcher.stop()
 
     def test_generate_response_with_tool_call(self):
-        # Mock the Ollama client and its response
+        # Mock the ChatOpenAI client and its response
         mock_tool_call = {"name": "search_course_content", "args": {"query": "test"}, "id": "tool_123"}
         mock_response = AIMessage(content="", tool_calls=[mock_tool_call])
         self.mock_llm.bind_tools.return_value.invoke.return_value = mock_response
@@ -44,11 +49,12 @@ class TestAIGenerator(unittest.TestCase):
         self.assertEqual(response, "Final answer")
 
     def test_generate_response_no_tool_call(self):
-        # Mock the Ollama client and its response
+        # Mock the ChatOpenAI client and its response
         mock_response = AIMessage(content="Direct answer", tool_calls=[])
+        # This test needs to mock the regular invoke, not the bind_tools().invoke()
         self.mock_llm.invoke.return_value = mock_response
 
-        # Generate a response
+        # Generate a response without tools
         response = self.ai_generator.generate_response(
             query="test query",
             tool_manager=self.mock_tool_manager

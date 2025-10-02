@@ -29,3 +29,8 @@ uploads/
 # OS
 .DS_Store
 Thumbs.db
+
+# Local data and keys
+/chroma_db/
+/fake_api_key/
+/docs/

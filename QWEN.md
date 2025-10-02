@@ -9,7 +9,7 @@ The application is built with a Python backend using FastAPI and a vanilla JavaS
 ### Key Technologies:
 - **Backend:**
   - [FastAPI](https://fastapi.tiangolo.com/): REST API framework
-  - [Anthropic's Claude](https://www.anthropic.com/): Generative AI model
+  - [Perplexity](https://www.perplexity.ai/): Generative AI model
   - [ChromaDB](https://www.trychroma.com/): Vector database for semantic search
   - [SentenceTransformers](https://www.sbert.net/): Text embedding generation
 - **Frontend:**
@@ -25,7 +25,7 @@ The application follows a client-server architecture:
    - `RAGSystem` (`rag_system.py`): Orchestrates the RAG pipeline
    - `DocumentProcessor` (`document_processor.py`): Processes course documents
    - `VectorStore` (`vector_store.py`): Manages ChromaDB for semantic search
-   - `AIGenerator` (`ai_generator.py`): Interfaces with Anthropic Claude API
+   - `AIGenerator` (`ai_generator.py`): Interfaces with Perplexity API
    - `SessionManager` (`session_manager.py`): Manages conversation history
    - Configuration in `config.py`
 
@@ -36,14 +36,14 @@ The application follows a client-server architecture:
 
 3. **Data (`/docs`):**
    - Contains course materials in text format
-   - Currently includes 4 course scripts about Anthropic technologies
+   - Currently includes 4 course scripts about AI technologies
 
 ## Building and Running
 
 ### Prerequisites:
 - Python 3.13 or higher
 - `uv` package manager (always use uv instead of pip for this project)
-- Anthropic API key
+- Perplexity API key
 
 ### Setup:
 1. Install `uv` if not already installed:
@@ -59,7 +59,7 @@ The application follows a client-server architecture:
 3. Set up environment variables:
    Create a `.env` file in the root directory:
    ```
-   ANTHROPIC_API_KEY=your_anthropic_api_key_here
+   PERPLEXITY_API_KEY=your_perplexity_api_key_here
    ```
 
 ### Running the Application:
@@ -123,7 +123,7 @@ Manages ChromaDB operations:
 - Course analytics
 
 ### AI Generator (`ai_generator.py`)
-Interfaces with Anthropic Claude API:
+Interfaces with Perplexity API:
 - Generates responses to user queries
 - Implements tool-based search functionality
 

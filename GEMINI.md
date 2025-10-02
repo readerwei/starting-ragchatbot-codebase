@@ -6,7 +6,7 @@ This project is a full-stack web application that provides a Retrieval-Augmented
 
 *   **Backend:**
     *   [FastAPI](https://fastapi.tiangolo.com/): For building the REST API.
-    *   [Anthropic's Claude](https://www.anthropic.com/): As the generative AI model.
+    *   [Perplexity](https://www.perplexity.ai/): As the generative AI model.
     *   [ChromaDB](https://www.trychroma.com/): As the vector store for semantic search.
     *   [SentenceTransformers](https://www.sbert.net/): For creating text embeddings.
 *   **Frontend:**
@@ -22,7 +22,7 @@ The application is divided into a backend and a frontend.
     *   The `RAGSystem` class in `rag_system.py` orchestrates the entire RAG pipeline.
     *   `DocumentProcessor` (`document_processor.py`) reads, parses, and chunks the course documents from the `docs` directory.
     *   `VectorStore` (`vector_store.py`) uses ChromaDB to store and retrieve document chunks and metadata.
-    *   `AIGenerator` (`ai_generator.py`) interacts with the Anthropic Claude API to generate responses.
+    *   `AIGenerator` (`ai_generator.py`) interacts with the Perplexity API to generate responses.
     *   The backend exposes two API endpoints:
         *   `POST /api/query`: Takes a user query and returns an AI-generated answer with sources.
         *   `GET /api/courses`: Returns statistics about the available courses.
@@ -42,10 +42,10 @@ The application is divided into a backend and a frontend.
 
 2.  **Set up Environment Variables:**
 
-    Create a `.env` file in the root directory and add your Anthropic API key:
+    Create a `.env` file in the root directory and add your Perplexity API key:
 
     ```
-    ANTHROPIC_API_KEY=your_anthropic_api_key_here
+    PERPLEXITY_API_KEY=your_perplexity_api_key_here
     ```
 
 3.  **Run the Application:**

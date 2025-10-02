@@ -1,0 +1,3 @@
+Course Title: Test Course
+Lesson 1: Test Lesson
+This is a test about Python.

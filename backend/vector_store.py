@@ -107,7 +107,7 @@ class VectorStore:
                 n_results=1
             )
             
-            if results['documents'][0] and results['metadatas'][0]:
+            if results and results.get('documents') and results['documents'][0]:
                 # Return the title (which is now the ID)
                 return results['metadatas'][0][0]['title']
         except Exception as e:
@@ -147,15 +147,17 @@ class VectorStore:
                 "lesson_link": lesson.lesson_link
             })
         
+        course_metadata = {
+            "title": course.title,
+            "instructor": course.instructor,
+            "course_link": course.course_link,
+            "lessons_json": json.dumps(lessons_metadata),  # Serialize as JSON string
+            "lesson_count": len(course.lessons)
+        }
+
         self.course_catalog.add(
             documents=[course_text],
-            metadatas=[{
-                "title": course.title,
-                "instructor": course.instructor,
-                "course_link": course.course_link,
-                "lessons_json": json.dumps(lessons_metadata),  # Serialize as JSON string
-                "lesson_count": len(course.lessons)
-            }],
+            metadatas=[{k: v for k, v in course_metadata.items() if v is not None}],
             ids=[course.title]
         )
     
@@ -165,11 +167,14 @@ class VectorStore:
             return
         
         documents = [chunk.content for chunk in chunks]
-        metadatas = [{
-            "course_title": chunk.course_title,
-            "lesson_number": chunk.lesson_number,
-            "chunk_index": chunk.chunk_index
-        } for chunk in chunks]
+        metadatas = [
+            {k: v for k, v in {
+                "course_title": chunk.course_title,
+                "lesson_number": chunk.lesson_number,
+                "chunk_index": chunk.chunk_index
+            }.items() if v is not None}
+            for chunk in chunks
+        ]
         # Use title with chunk index for unique IDs
         ids = [f"{chunk.course_title.replace(' ', '_')}_{chunk.chunk_index}" for chunk in chunks]
         

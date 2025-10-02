@@ -3,8 +3,8 @@ from dataclasses import dataclass
 @dataclass
 class Config:
     """Configuration settings for the RAG system"""
-    # Ollama settings
-    OLLAMA_MODEL: str = "llama3.2"
+    # Perplexity settings
+    PERPLEXITY_MODEL: str = "llama-3.1-sonar-hybrid"
     
     # Embedding model settings
     EMBEDDING_MODEL: str = "all-MiniLM-L6-v2"

@@ -8,7 +8,7 @@ class Tool(ABC):
     
     @abstractmethod
     def get_tool_definition(self) -> Dict[str, Any]:
-        """Return Anthropic tool definition for this tool"""
+        """Return tool definition for this tool"""
         pass
     
     @abstractmethod
