@@ -54,3 +54,23 @@ The application will be available at:
 - Web Interface: `http://localhost:8000`
 - API Documentation: `http://localhost:8000/docs`
 
+## Code Quality
+
+This project uses `black`, `isort`, and `ruff` for code formatting, import sorting, and linting. To run the quality checks, use the following command:
+
+```bash
+make quality
+```
+
+To automatically format the code, use the following command:
+
+```bash
+make format
+```
+
+To automatically fix linting issues, use the following command:
+
+```bash
+make lint
+```
+

@@ -1,21 +1,23 @@
 import unittest
 from unittest.mock import MagicMock, patch
+
 from ai_generator import AIGenerator
 from langchain_core.messages import AIMessage
+
 
 class TestAIGenerator(unittest.TestCase):
 
     def setUp(self):
         self.mock_tool_manager = MagicMock()
         # Patch ChatOpenAI instead of ChatOllama
-        self.patcher = patch('langchain_openai.ChatOpenAI')
+        self.patcher = patch("langchain_openai.ChatOpenAI")
         self.MockChatOpenAI = self.patcher.start()
         self.mock_llm = self.MockChatOpenAI.return_value
-        
+
         # Mock os.getenv to avoid needing a real API key
-        with patch('os.getenv', return_value='fake_api_key'):
+        with patch("os.getenv", return_value="fake_api_key"):
             self.ai_generator = AIGenerator(model="test_model")
-        
+
         self.ai_generator.llm = self.mock_llm
 
     def tearDown(self):
@@ -23,7 +25,11 @@ class TestAIGenerator(unittest.TestCase):
 
     def test_generate_response_with_tool_call(self):
         # Mock the ChatOpenAI client and its response
-        mock_tool_call = {"name": "search_course_content", "args": {"query": "test"}, "id": "tool_123"}
+        mock_tool_call = {
+            "name": "search_course_content",
+            "args": {"query": "test"},
+            "id": "tool_123",
+        }
         mock_response = AIMessage(content="", tool_calls=[mock_tool_call])
         self.mock_llm.bind_tools.return_value.invoke.return_value = mock_response
 
@@ -39,7 +45,7 @@ class TestAIGenerator(unittest.TestCase):
         response = self.ai_generator.generate_response(
             query="test query",
             tools=[{"name": "search_course_content"}],
-            tool_manager=self.mock_tool_manager
+            tool_manager=self.mock_tool_manager,
         )
 
         # Assert that the tool was called and the final response is correct
@@ -56,13 +62,13 @@ class TestAIGenerator(unittest.TestCase):
 
         # Generate a response without tools
         response = self.ai_generator.generate_response(
-            query="test query",
-            tool_manager=self.mock_tool_manager
+            query="test query", tool_manager=self.mock_tool_manager
         )
 
         # Assert that the tool was not called and the direct answer is returned
         self.mock_tool_manager.execute_tool.assert_not_called()
         self.assertEqual(response, "Direct answer")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

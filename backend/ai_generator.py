@@ -23,7 +23,7 @@ class AIGenerator:
         "- **No meta-commentary**:\n"
         "  - Provide direct answers only — no reasoning process, search explanations, or"
         " question-type analysis\n"
-        "  - Do not mention \"based on the search results\"\n\n"
+        '  - Do not mention "based on the search results"\n\n'
         "All responses must be:\n"
         "1. **Brief, Concise and focused** - Get to the point quickly\n"
         "2. **Educational** - Maintain instructional value\n"

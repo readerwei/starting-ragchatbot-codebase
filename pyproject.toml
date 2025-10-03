@@ -16,4 +16,13 @@ dependencies = [
     "python-dotenv==1.1.1",
     "pytest==8.3.2",
     "pytest-mock==3.14.0",
+    "black==24.4.2",
+    "isort==5.13.2",
+    "ruff==0.5.5",
 ]
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+extend-select = ["I"]
