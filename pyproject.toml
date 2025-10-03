@@ -21,8 +21,16 @@ dependencies = [
     "ruff==0.5.5",
 ]
 
+<<<<<<< HEAD
 [tool.ruff]
 line-length = 88
 
 [tool.ruff.lint]
 extend-select = ["I"]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "backend/tests",
+]
+python_files = "test_*.py"
+
